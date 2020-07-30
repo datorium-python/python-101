@@ -44,12 +44,27 @@ def calculate(a, b):  # View -> Will Run Function when Route if found by Flask
     return f"Result is: {result}"
 
 
-@app.route('/template')
-def template():
-    current = dt.datetime.now()
-    users = ['Andrew', 'Kate', 'Joe', 'Dan', 'Harry']
-    random_number = random.randint(1, 10)
-    return render_template('index.html', current_datetime=current, users=users, random_number=random_number)
+@app.route('/home')
+def home():
+    context = {
+        'title': 'Home',
+        'users': ['Andrew', 'Kate', 'Joe', 'Dan', 'Harry'],
+        'random_number': random.randint(1, 10),
+        'current_datetime': dt.datetime.now(),
+    }
+    return render_template('index.html', **context)
+
+
+@app.route('/about')
+def about():
+    title = 'About'
+    return render_template('about.html', title=title)
+
+
+@app.route('/contacts')
+def contacts():
+    title = 'Contacts'
+    return render_template('contacts.html', title=title)
 
 
 app.run(
