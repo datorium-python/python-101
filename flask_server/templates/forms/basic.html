@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Forms - Basic Form</title>
+</head>
+<body>
+    <h1>Basic Form Example</h1>
+    <hr>
+
+    <form method="post" action="">
+        <input type="email" name="email" placeholder="Email" required>
+        <input type="text" name="first_name" placeholder="First Name">
+        <input type="text" name="last_name" placeholder="Last Name">
+        <input type="password" name="password" placeholder="Password" required>
+        <input type="submit" value="Submit">
+    </form>
+    <hr>
+
+    <h2>Registered Users</h2>
+
+    {% for user in users %}
+    <h4>User {{ user.email }}</h4>
+    <ul>
+        <li>Email: {{ user.email }}</li>
+        <li>First Name: {{ user.first_name }}</li>
+        <li>Last Name: {{ user.last_name }}</li>
+        <li>Password: {{ user.password }}</li>
+    </ul>
+    <hr>
+    {% endfor %}
+</body>
+</html>

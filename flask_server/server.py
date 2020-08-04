@@ -1,4 +1,5 @@
 import random
+import hashlib
 import datetime as dt
 from flask import Flask, request, render_template
 
@@ -65,6 +66,41 @@ def about():
 def contacts():
     title = 'Contacts'
     return render_template('contacts.html', title=title)
+
+
+@app.route('/req/get')
+def req_get():
+    print(request)
+    return 'Basic GET request'
+
+
+@app.route('/req/post', methods=['GET', 'POST'])
+def req_post():
+    return 'Basic POST request'
+
+
+USERS = []
+
+
+@app.route('/forms/basic', methods=['GET', 'POST'])
+def form_basic():
+    if request.method == 'POST':
+        email = request.form.get('email')
+        first_name = request.form.get('first_name')
+        last_name = request.form.get('last_name')
+        password = request.form.get('password')
+        password_hash = hashlib.sha1(password.encode('utf-8')).hexdigest()
+
+        user = {
+            'email': email,
+            'first_name': first_name,
+            'last_name': last_name,
+            'password': password_hash,
+        }
+
+        USERS.append(user)
+
+    return render_template('forms/basic.html', users=USERS)
 
 
 app.run(
