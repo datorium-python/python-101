@@ -1,13 +1,15 @@
 import random
 import hashlib
 import datetime as dt
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, abort
+from flask_server.forms import BasicForm
 
 
 app = Flask(
     __name__,
     template_folder='templates'
 )
+app.secret_key = 'very_secret_key'
 
 
 @app.route('/')
@@ -84,11 +86,13 @@ USERS = []
 
 @app.route('/forms/basic', methods=['GET', 'POST'])
 def form_basic():
-    if request.method == 'POST':
-        email = request.form.get('email')
-        first_name = request.form.get('first_name')
-        last_name = request.form.get('last_name')
-        password = request.form.get('password')
+    form = BasicForm()
+
+    if form.validate_on_submit():
+        email = form.email.data
+        first_name = form.first_name.data
+        last_name = form.last_name.data
+        password = form.password.data
         password_hash = hashlib.sha1(password.encode('utf-8')).hexdigest()
 
         user = {
@@ -100,7 +104,7 @@ def form_basic():
 
         USERS.append(user)
 
-    return render_template('forms/basic.html', users=USERS)
+    return render_template('forms/basic.html', users=USERS, form=form)
 
 
 app.run(

@@ -8,7 +8,21 @@
     <h1>Basic Form Example</h1>
     <hr>
 
+    {% if form.errors %}
+    <h2>Errors</h2>
+    {% for field, errors in form.errors.items() %}
+        <p>{{ field }}</p>
+        <ul>
+        {% for error in errors %}
+            <li>{{ error }}</li>
+        {% endfor %}
+        </ul>
+    {% endfor %}
+    <hr>
+    {% endif %}
+
     <form method="post" action="">
+        {{ form.csrf_token }}
         <input type="email" name="email" placeholder="Email" required>
         <input type="text" name="first_name" placeholder="First Name">
         <input type="text" name="last_name" placeholder="Last Name">
