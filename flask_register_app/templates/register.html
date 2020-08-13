@@ -1,28 +1,30 @@
 {% extends "base.html" %}
 
 {% block content %}
-<form class="form-signin">
+<form method="post" class="form-signin">
+  {{ form.csrf_token }}
+
   <div class="text-center mb-4">
     <h1 class="h3 mb-3 font-weight-normal">Register</h1>
   </div>
 
   <div class="form-label-group">
-    <input type="text" id="inputName" class="form-control" placeholder="Full name" required autofocus>
+    <input name="full_name" type="text" id="inputName" class="form-control" placeholder="Full name" required autofocus>
     <label for="inputName">Full name</label>
   </div>
 
   <div class="form-label-group">
-    <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+    <input name="email" type="email" id="inputEmail" class="form-control" placeholder="Email address" required>
     <label for="inputEmail">Email address</label>
   </div>
 
   <div class="form-label-group">
-    <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+    <input name="password" type="password" id="inputPassword" class="form-control" placeholder="Password" required>
     <label for="inputPassword">Password</label>
   </div>
 
   <div class="form-label-group">
-    <input type="password" id="inputConfirmPassword" class="form-control" placeholder="Confirm password" required>
+    <input name="confirm_password" type="password" id="inputConfirmPassword" class="form-control" placeholder="Confirm password" required>
     <label for="inputConfirmPassword">Confirm password</label>
   </div>
 
