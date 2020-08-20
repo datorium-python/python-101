@@ -1,4 +1,5 @@
 from flask_wtf import FlaskForm
+from flask_wtf.file import FileField, FileAllowed
 from wtforms.fields import StringField, PasswordField, BooleanField
 from wtforms.validators import Email, DataRequired, Length, EqualTo
 
@@ -13,5 +14,8 @@ class RegisterForm(LoginForm):
     full_name = StringField('full_name', validators=[DataRequired(), Length(min=3, max=100)])
     confirm_password = PasswordField('confirm_password', validators=[
         DataRequired(), Length(min=6, max=20), EqualTo('password', message='Passwords are not equal!')
+    ])
+    image = FileField('image', validators=[
+        FileAllowed(['jpg', 'jpeg', 'png'])
     ])
     terms = BooleanField('terms', validators=[DataRequired()])

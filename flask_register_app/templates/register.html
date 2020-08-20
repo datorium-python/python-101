@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-<form method="post" class="form-signin">
+<form method="post" enctype="multipart/form-data" class="form-signin">
   {{ form.csrf_token }}
 
   <div class="text-center mb-4">
@@ -18,6 +18,11 @@
   <div class="form-label-group">
     <input name="email" type="email" id="inputEmail" class="form-control" placeholder="Email address" required>
     <label for="inputEmail">Email address</label>
+  </div>
+
+  <div class="form-label-group">
+    <input name="image" type="file" id="image" class="form-control" placeholder="Profile image">
+    <label for="image">Profile image</label>
   </div>
 
   <div class="form-label-group">
