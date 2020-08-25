@@ -7,5 +7,6 @@ idna==2.10
 itsdangerous==1.1.0
 Jinja2==2.11.2
 MarkupSafe==1.1.1
+peewee==3.13.3
 Werkzeug==1.0.1
 WTForms==2.3.3
