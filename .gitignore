@@ -267,3 +267,4 @@ pip-selfcheck.json
 
 # Project
 uploads/
+*.db
