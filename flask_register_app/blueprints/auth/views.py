@@ -26,12 +26,12 @@ def login():
         email = form.email.data  # email@gmail.com
         password = form.password.data
 
-        if email not in USERS_DB:
+        existing_user = User.get_or_none(User.email == email)
+        if not existing_user:
             flash(f'User {email} is not registered!', category='danger')
             return redirect(url_for('auth.login'))
 
-        user = USERS_DB.get(email)  # {'full_name': '...', 'password': '...'}
-        if not check_password_hash(user.get('password'), password):
+        if not check_password_hash(existing_user.password, password):
             flash(f'User {email} password is not correct!', category='danger')
             return redirect(url_for('auth.login'))
 
@@ -47,6 +47,7 @@ def register():
 
     if form.validate_on_submit():
         email = form.email.data
+
         existing_user = User.get_or_none(User.email == email)
         if existing_user:
             print(existing_user)
