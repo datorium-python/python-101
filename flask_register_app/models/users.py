@@ -1,3 +1,4 @@
+import datetime as dt
 from peewee import *
 
 
@@ -20,3 +21,19 @@ class User(Model):
 
     class Meta:
         database = db
+
+
+class Comment(Model):
+    user = ForeignKeyField(User, backref='comments')
+    text = TextField()
+    created_at = DateTimeField(default=dt.datetime.now)
+
+    class Meta:
+        database = db
+
+
+# 1 User
+# 5 Comments from this user
+
+# Comment.select().where(Comment.user == existing_user) -> default select for multiple records
+# existing_user.comments -> backref (argv for ForeignKeyField)

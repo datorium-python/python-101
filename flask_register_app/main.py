@@ -1,7 +1,7 @@
 import os
-from flask import Flask, redirect, url_for, session, render_template
+from flask import Flask, redirect, url_for, session, render_template, request
 from flask_register_app.blueprints.auth.views import bp
-from flask_register_app.models.users import User
+from flask_register_app.models.users import User, Comment
 
 
 app = Flask(
@@ -19,13 +19,25 @@ app.config['UPLOAD_FOLDER'] = upload_folder
 # To create a table in Peewee
 # we need this line
 User.create_table()
+Comment.create_table()
 
 
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 def index():
     if not session.get('is_logged_in'):
         return redirect(url_for('auth.login'))
-    return render_template('index.html')
+
+    user = User.get_or_none(User.id == session.get('user_id'))
+    if request.method == 'POST':
+        text = request.form.get('text')
+
+        # Register new comment from user
+        Comment.create(
+            user=user,
+            text=text
+        )
+
+    return render_template('index.html', user=user)
 
 
 app.register_blueprint(bp)  # Register Blueprint in Flask App

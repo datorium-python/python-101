@@ -8,5 +8,21 @@
     <div class="row">
         <a href="{{ url_for('auth.logout') }}" class="btn btn-danger">Logout</a>
     </div>
+
+    <div class="row mt-4">
+        <form method="post" action="">
+            <input type="text" name="text">
+            <input type="submit" value="Comment">
+        </form>
+    </div>
+
+    <div class="row mt-4">
+        <p>
+        {% for comment in user.comments %}
+           {{ comment.text }} :: {{ comment.created_at }}
+            <br><br>
+        {% endfor %}
+        </p>
+    </div>
 </div>
 {% endblock %}
