@@ -1,7 +1,7 @@
 import os
 import uuid
 import datetime as dt
-from flask import Blueprint, render_template, redirect, url_for, flash, current_app
+from flask import Blueprint, render_template, redirect, url_for, flash, current_app, session
 from werkzeug.security import generate_password_hash, check_password_hash
 from .forms import LoginForm, RegisterForm
 from flask_register_app.models.users import User
@@ -22,8 +22,10 @@ def index():
 def login():
     form = LoginForm()
 
+    print(session.items())
+
     if form.validate_on_submit():
-        email = form.email.data  # email@gmail.com
+        email = form.email.data
         password = form.password.data
 
         existing_user = User.get_or_none(User.email == email)
@@ -36,9 +38,18 @@ def login():
             return redirect(url_for('auth.login'))
 
         flash(f'User {email} logged in!', category='success')
-        return redirect(url_for('auth.login'))
+        session['is_logged_in'] = True
+        session['user_id'] = existing_user.id
+        session['user_email'] = existing_user.email
+        return redirect(url_for('index'))
 
     return render_template('login.html', form=form)
+
+
+@bp.route('/logout')
+def logout():
+    session.clear()
+    return redirect(url_for('auth.login'))
 
 
 @bp.route('/register', methods=['GET', 'POST'])

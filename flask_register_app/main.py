@@ -1,5 +1,5 @@
 import os
-from flask import Flask, redirect, url_for
+from flask import Flask, redirect, url_for, session, render_template
 from flask_register_app.blueprints.auth.views import bp
 from flask_register_app.models.users import User
 
@@ -23,7 +23,9 @@ User.create_table()
 
 @app.route('/')
 def index():
-    return redirect(url_for('auth.login'))
+    if not session.get('is_logged_in'):
+        return redirect(url_for('auth.login'))
+    return render_template('index.html')
 
 
 app.register_blueprint(bp)  # Register Blueprint in Flask App
