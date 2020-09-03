@@ -6,10 +6,13 @@
     <div class="row mt-4 d-flex justify-content-center">
       <div class="col-md-6">
         <form method="post">
+          {{ form.csrf_token() }}
 
           <div class="text-center mb-4">
             <h1 class="h3 mb-3 font-weight-normal">Welcome back!</h1>
           </div>
+
+          {% include "shared/flash.html" %}
 
           <div class="form-label-group mb-4">
             <input name="email" type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
